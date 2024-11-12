@@ -83,6 +83,7 @@ const GoldRateContextProvider = ({ children }) => {
         "Error",
         "Please check your internet connection and try again."
       );
+      setIsLoading(false);
     }
   };
 
