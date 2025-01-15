@@ -31,18 +31,24 @@ const Home = () => {
         <View style={{ marginBottom: 20 }}>
           <Item
             title="1 Tola ≈ 11.664 Grams"
-            value={goldRateContext.values["1 Tola"]}
+            value={goldRateContext.values["Per Tola Gold"]}
           />
         </View>
         <View style={{ marginBottom: 20 }}>
-          <Item title="10 Grams" value={goldRateContext.values["10 Gram"]} />
+          <Item
+            title="10 Grams"
+            value={goldRateContext.values["Per 10 Gram Gold"]}
+          />
         </View>
         <View style={{ marginBottom: 20 }}>
-          <Item title="1 Gram" value={goldRateContext.values["1 Gram"]} />
+          <Item
+            title="1 Gram"
+            value={goldRateContext.values["Per 1 Gram Gold"]}
+          />
         </View>
         <Item
           title="1 Ounce ≈ 28.3495 Grams"
-          value={goldRateContext.values["1 Ounce"]}
+          value={goldRateContext.values["Per Ounce"]}
         />
       </ScrollView>
     </SafeAreaView>

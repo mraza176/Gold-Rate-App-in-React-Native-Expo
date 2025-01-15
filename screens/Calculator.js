@@ -39,13 +39,33 @@ const Calculator = () => {
       return;
     }
     if (btn1) {
-      setResult(parseFloat(amount) * goldRateContext.values["1 Gram"][0]);
+      setResult(
+        parseFloat(amount) *
+          parseFloat(
+            goldRateContext.values["Per 1 Gram Gold"][0].replace(/,/g, "")
+          )
+      );
     } else if (btn2) {
-      setResult(parseFloat(amount) * goldRateContext.values["1 Gram"][1]);
+      setResult(
+        parseFloat(amount) *
+          parseFloat(
+            goldRateContext.values["Per 1 Gram Gold"][1].replace(/,/g, "")
+          )
+      );
     } else if (btn3) {
-      setResult(parseFloat(amount) * goldRateContext.values["1 Gram"][2]);
+      setResult(
+        parseFloat(amount) *
+          parseFloat(
+            goldRateContext.values["Per 1 Gram Gold"][2].replace(/,/g, "")
+          )
+      );
     } else {
-      setResult(parseFloat(amount) * goldRateContext.values["1 Gram"][3]);
+      setResult(
+        parseFloat(amount) *
+          parseFloat(
+            goldRateContext.values["Per 1 Gram Gold"][3].replace(/,/g, "")
+          )
+      );
     }
   };
 

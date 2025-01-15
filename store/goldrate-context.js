@@ -1,6 +1,8 @@
 import { createContext, useState } from "react";
 import { Alert } from "react-native";
+
 import axios from "axios";
+import cheerio from "react-native-cheerio";
 
 export const GoldRateContext = createContext({
   values: {},
@@ -11,22 +13,22 @@ export const GoldRateContext = createContext({
 const GoldRateContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState({
-    "1 Tola": [0, 0, 0, 0, 0],
-    "10 Gram": [0, 0, 0, 0, 0],
-    "1 Gram": [0, 0, 0, 0, 0],
-    "1 Ounce": [0, 0, 0, 0, 0],
+    "Per Tola Gold": [],
+    "Per 10 Gram Gold": [],
+    "Per 1 Gram Gold": [],
+    "Per Ounce": [],
   });
 
   const fetchData = async () => {
     try {
-      const options = {
-        method: "GET",
-        url: "https://gold-prices-pakistan.p.rapidapi.com/live",
-        headers: {
-          "x-rapidapi-key": process.env.EXPO_PUBLIC_API_KEY,
-          "x-rapidapi-host": "gold-prices-pakistan.p.rapidapi.com",
-        },
-      };
+      // const options = {
+      //   method: "GET",
+      //   url: "https://gold-prices-pakistan.p.rapidapi.com/live",
+      //   headers: {
+      //     "x-rapidapi-key": process.env.EXPO_PUBLIC_API_KEY,
+      //     "x-rapidapi-host": "gold-prices-pakistan.p.rapidapi.com",
+      //   },
+      // };
 
       // const options = {
       //   method: "GET",
@@ -39,7 +41,26 @@ const GoldRateContextProvider = ({ children }) => {
 
       setIsLoading(true);
 
-      const response = await axios.request(options);
+      // const response = await axios.request(options);
+
+      const response = await axios.get(process.env.EXPO_PUBLIC_API_URL);
+      const $ = cheerio.load(response.data);
+
+      const goldRates = {
+        "Per Tola Gold": [],
+        "Per 10 Gram Gold": [],
+        "Per 1 Gram Gold": [],
+        "Per Ounce": [],
+      };
+
+      $("tbody tr").each((index, row) => {
+        const cells = $(row).find("td");
+        const rateType = $(cells[0]).text().trim();
+
+        for (let i = 1; i < 5; i++) {
+          goldRates[rateType].push($(cells[i]).text().trim());
+        }
+      });
 
       // const data = {
       //   "1 Tola": [
@@ -75,7 +96,7 @@ const GoldRateContextProvider = ({ children }) => {
       //   "1 Ounce": [587350, 538400, 513931, 440513],
       // };
 
-      setValues(response.data);
+      setValues(goldRates);
       setIsLoading(false);
     } catch (error) {
       console.error(error);
