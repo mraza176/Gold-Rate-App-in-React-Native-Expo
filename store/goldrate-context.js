@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 
 import axios from "axios";
 import cheerio from "react-native-cheerio";
@@ -38,6 +38,16 @@ const GoldRateContextProvider = ({ children }) => {
       //     "x-rapidapi-host": "live-metal-prices.p.rapidapi.com",
       //   },
       // };
+
+      if (Platform.OS === "web") {
+        setValues({
+          "Per Tola Gold": ["241650", "221511", "211444", "181238"],
+          "Per 10 Gram Gold": ["207180", "189914", "181283", "155385"],
+          "Per 1 Gram Gold": ["20718", "18991", "18128", "15539"],
+          "Per Ounce": ["587350", "538400", "513931", "440513"],
+        });
+        return;
+      }
 
       setIsLoading(true);
 
